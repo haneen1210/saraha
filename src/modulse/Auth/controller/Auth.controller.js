@@ -23,18 +23,21 @@ export const signup = async (req, res) => {
     return res.status(201).json({ message: "success", user: createUser._id });
 }
 
-export const signin = async (req, res) => {
+export const signin = async (req, res,next) => {
     const { email, password } = req.body;
     const user = await userModel.findOne({ email });
     if (!user) {
-        return res.status(404).json({ message: "data invalid" });
+        //return res.status(404).json({ message: "data invalid" });
+        return next(new Error("data invalid"));
     }
     if(!user.confirmEmail){
-        return res.status(400).json({message:"plz confirm your email"});
+       // return res.status(400).json({message:"plz confirm your email"});
+        return next(new Error("plz confirm your email"));
     }
     const match = bcrypt.compareSync(password, user.password);
     if (!match) {
-        return res.status(409).json({ message: "data invalid" });
+        //return res.status(409).json({ message: "data invalid" });
+        return next(new Error("data invalid"));
     }
     const token = jwt.sign({ id: user._id }, process.env.LOGINSIGNATURE);
     return res.status(201).json({ message: "success", token });
@@ -46,13 +49,12 @@ export const signin = async (req, res) => {
 export const confirmEmail  = async (req, res,next ) => {
 const {token}=req.params
 const decoded=jwt.verify(token,process.env.EMAILTOKEN);
-
-const user =await userModel.findOneAndUpdate({email:decoded.email,confirmEmail:false},{confirmEmail:true});
+const user = await userModel.findOneAndUpdate({ email: decoded.email, confirmEmail: false }, { confirmEmail: true },{ new: true });
 if(!user){
-
-    return res.status(400).json({message:"your email is verified"});
+    return res.status(400).json({ message: "your email is verified." });
 }
 return res.redirect(process.env.FRONTEND_LOGIN);
+
 }
 
 export const NewconfirmEmail  = async (req, res,next ) => {

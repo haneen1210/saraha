@@ -10,14 +10,14 @@ export const auth = asynHandler(async (req, res, next) => {
 
     const token = authorization.split(process.env.BEARERKEY)[1];
     if (!token) {
-        return res.Statuse(409).json({ message: "invalid authorization" });
+        return res.status(409).json({ message: "invalid authorization" });
     }
     const decoded = jwt.verify(token, process.env.LOGINSIGNATURE)
     const authUser = await userModel.findById(decoded.id).select("userName email");
     if (!authUser) {
-        return res.Statuse(409).json({ message: "not register account" });
+        return res.status(409).json({ message: "not register account" });
     }
-    req.user = authUser
+    req.user = authUser;
     next();
 }
 )
