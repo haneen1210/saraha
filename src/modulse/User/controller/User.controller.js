@@ -4,7 +4,7 @@ import {asynHandler} from "../../../middleware/errorHanding.js";
 
 export const profile = async (req, res) => {
 
-    return res.json("okokkk");
+  
     //const imageUrl= req.file.destination + '/' + req.file.filename;
 //const user= await userModel.findByIdAndUpdate(req.user._id,{profilePic:imageUrl}, { new: true });
 
