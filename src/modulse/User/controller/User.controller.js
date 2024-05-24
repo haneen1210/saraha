@@ -2,7 +2,7 @@ import userModel from "../../../../DB/models/user.model.js";
 import cloudinary from "../../../services/cloudinary.js";
 import { asynHandler } from "../../../middleware/errorHanding.js";
 import bcrypt from 'bcryptjs';
-
+/*
 export const profile = async (req, res, next) => {
    
     //const imageUrl= req.file.destination + '/' + req.file.filename;
@@ -20,6 +20,37 @@ export const profile = async (req, res, next) => {
     return res.json({ message: user });
 }
 
+*/
+
+
+export const profile = async (req, res, next) => {
+    try {
+        if (!req.file) {
+            return next(new Error("please provide a file"));
+        }
+
+        const { secure_url, public_id } = await cloudinary.uploader.upload(req.file.path, {
+            folder: `${process.env.APP_NAME}/userx/${req.user._id}/profile`
+        });
+
+        const user = await userModel.findById(req.user._id);
+        if (!user) {
+            return next(new Error("User not found"));
+        }
+
+        // حذف الصورة القديمة من Cloudinary إذا كانت موجودة
+        if (user.profilePic && user.profilePic.public_id) {
+            await cloudinary.uploader.destroy(user.profilePic.public_id);
+        }
+
+        user.profilePic = { secure_url, public_id };
+        await user.save();
+
+        return res.json({ message: "Profile picture updated successfully", user });
+    } catch (error) {
+        return next(error);
+    }
+};
 
 
 export const coverPic = async (req, res, next) => {
