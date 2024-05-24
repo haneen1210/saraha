@@ -13,7 +13,10 @@ export const profile = async (req, res, next) => {
        folder: `${process.env.APP_NAME}/userx/${req.user._id}/profile`
    })
     const user = await userModel.findByIdAndUpdate(req.user._id, { profilePic:{secure_url,public_id }}, { new: false });
-    await cloudinary.uploader.destroy(user.profilePic.public_id);
+    if(user.profilePic){
+        await cloudinary.uploader.destroy(user.profilePic.public_id);
+    }
+    
     return res.json({ message: user });
 }
 
