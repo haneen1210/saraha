@@ -5,16 +5,13 @@ import bcrypt from 'bcryptjs';
 
 export const profile = async (req, res, next) => {
    
-    //const imageUrl= req.file.destination + '/' + req.file.filename;
-    //const user= await userModel.findByIdAndUpdate(req.user._id,{profilePic:imageUrl}, { new: true });
-    // return res.json({ message: user });
     if (!req.file) {
         return next(new Error("please provide a file"));
     }
 
     const { secure_url,public_id } = await cloudinary.uploader.upload(req.file.path, {
-        folder: `${process.env.APP_NAME}/userx/${req.user._id}/profile`
-    })
+       folder: `${process.env.APP_NAME}/userx/${req.user._id}/profile`
+   })
     const user = await userModel.findByIdAndUpdate(req.user._id, { profilePic:{secure_url,public_id }}, { new: false });
     await cloudinary.uploader.destroy(user.profilePic.public_id);
     return res.json({ message: user });
@@ -52,6 +49,7 @@ export const profile = async (req, res, next) => {
     }
 };
 */
+
 export const coverPic = async (req, res, next) => {
     if (!req.files) {
         return next(new Error("please provide a file"));

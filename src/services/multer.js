@@ -1,22 +1,25 @@
-import multer from 'multer';
-import { nanoid } from 'nanoid';
-//import path from 'path';
-//import { fileURLToPath } from 'url';
-//const __dirname = path.dirname(fileURLToPath(import.meta.url));
-//export const filevalidation = {
- //   image: ['image/jpeg', 'image/png', 'image/webp'],
- //   file: ['application/pdf']
-//}
-function FileUpload() {
+
+import multer from "multer"
+
+export const filevalidation = {
+    image: ['image/png', 'image/jpeg', 'image/webp'],
+    pdf: ['application/pdf'],
+    excel: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+};
+
+function FileUpload(customValidation = []) {
     const storage = multer.diskStorage({});
+    
     function fileFilter(req, file, cb) {
-        if (['image/jpeg', 'image/png', 'image/webp'].includes(file.mimetype)) {
+        if (customValidation.includes(file.mimetype)) {
             cb(null, true);
+        } else {
+            cb("Invalid format", false);
         }
-        else {
-            cb("invalid format", false)
-        }}
+    }
+    
     const upload = multer({ fileFilter, storage });
     return upload;
 }
+
 export default FileUpload;
