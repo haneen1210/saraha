@@ -9,3 +9,6 @@ import mongoose from "mongoose";
     });
  }
  export default connectDB
+
+
+ //DB_LOCAL="mongodb+srv://haneen:haneen123@cluster0.nunbyqz.mongodb.net/saraha"

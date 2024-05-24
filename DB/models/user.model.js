@@ -1,4 +1,5 @@
 
+//import { object } from 'joi';
 import mongoose, { Schema, model } from 'mongoose';
 const UserSchema = new Schema({
 userName:{
@@ -24,7 +25,12 @@ gender:{
     enum:['Male','Female'],
 },
 profilePic:{
-    type:String,
+    
+    type:Object,
+},
+covert:{
+    type:[String],
+
 }
 
 }

@@ -10,6 +10,6 @@ export const asynHandler = (fun) => {
 
 export const globalErrorHandler =(err,req,res,next)=>{
     if(err){
-        return res.json({message:err});
+        return res.json({message:err.message});
     }
 }
