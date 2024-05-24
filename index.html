@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Prediction Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        .result {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Prediction Simulation</h1>
+        <form id="weather-form">
+            <label for="weather-today">What is the weather today?</label>
+            <select id="weather-today">
+                <option value="rain">Rain</option>
+                <option value="dry">Dry</option>
+            </select>
+            <br><br>
+
+            <label for="rainfall-today">What is the rainfall today?</label>
+            <select id="rainfall-today">
+                <option value="high">High</option>
+                <option value="low">Low</option>
+            </select>
+            <br><br>
+
+            <label for="temperature-today">What is the temperature today?</label>
+            <select id="temperature-today">
+                <option value="warm">Warm</option>
+                <option value="cold">Cold</option>
+            </select>
+            <br><br>
+
+            <label for="cloud-cover-today">What is the cloud cover today?</label>
+            <select id="cloud-cover-today">
+                <option value="overcast">Overcast</option>
+                <option value="clear">Clear</option>
+            </select>
+            <br><br>
+
+            <button type="button" onclick="predictWeather()">Predict Weather</button>
+        </form>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script src="Weather.js"></script>
+</body>
+</html>

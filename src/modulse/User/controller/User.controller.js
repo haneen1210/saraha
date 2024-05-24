@@ -2,7 +2,7 @@ import userModel from "../../../../DB/models/user.model.js";
 import cloudinary from "../../../services/cloudinary.js";
 import { asynHandler } from "../../../middleware/errorHanding.js";
 import bcrypt from 'bcryptjs';
-/*
+
 export const profile = async (req, res, next) => {
    
     //const imageUrl= req.file.destination + '/' + req.file.filename;
@@ -20,9 +20,9 @@ export const profile = async (req, res, next) => {
     return res.json({ message: user });
 }
 
-*/
 
 
+/*
 export const profile = async (req, res, next) => {
     try {
         if (!req.file) {
@@ -51,8 +51,7 @@ export const profile = async (req, res, next) => {
         return next(error);
     }
 };
-
-
+*/
 export const coverPic = async (req, res, next) => {
     if (!req.files) {
         return next(new Error("please provide a file"));
